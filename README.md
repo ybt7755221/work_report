@@ -1,7 +1,7 @@
-## &nbsp;&nbsp;&nbsp;&nbsp;work_report是一个基于gin的日志汇总系统。源于本人不愿每日手动重复收集人员日报，并汇总周报而制作的自动生成系统
-
+## &nbsp;&nbsp;&nbsp;&nbsp;work_report是一个基于gin的日志汇总系统
 
 ##### 介绍:
+######源于本人不愿每日手动重复收集人员日报，并汇总周报而制作的自动生成系统
 #####&nbsp;&nbsp;&nbsp;&nbsp;此项目为日志系统后端代码
 ######&nbsp;&nbsp;&nbsp;&nbsp;前端页面参见： [wp-front](https://github.com/ybt7755221/wp-front)
 
