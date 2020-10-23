@@ -1,30 +1,12 @@
-## &nbsp;&nbsp;&nbsp;&nbsp;work_report是一个基于gin的api微服务封装
+## &nbsp;&nbsp;&nbsp;&nbsp;work_report是一个基于gin的日志汇总系统。源于本人不愿每日手动重复收集人员日报，并汇总周报而制作的自动生成系统
 
 
 #### 介绍:
+    此项目为日志系统后端代码，
+    前端页面参见： [wp-front](https://github.com/ybt7755221/wp-front)
 
 ##### 目录结构:
-
-- controllers -- 处理入参，出参
-- entities -- 数据库实例
-- models -- 数据库操作
-- service -- 处理业务逻辑
-- router -- 路由
-- middlewares -- 中间件
-- libraries -- 工具库
-
-##### libraries:
-
-+ apolloCli - apollo连接库
-+ database - 数据库连接库
-+ efile - 文件操作库
-+ elog - 错误日志库
-+ redis - redis链接库
-+ verify - 数据校验库
-+ wmail - 邮件库
-+ mongo - mongo连接库
----
-#### 安装说明：
+参见 [gpi](https://github.com/ybt7755221/gpi)
 
 ##### 安装
 &nbsp;&nbsp;&nbsp;&nbsp;下载项目，在项目根目录运行：（本地测试推荐）
@@ -33,16 +15,9 @@
     go mod download
     go run main.go
 
-##### 修改apollo配置
-
-    //如果要使用apollo，修改配置
-    const (
-      	AppId = ""  //apollo app id
-      	IpFAT = ""  //测试 apollo ip
-      	IpPRO = ""  //正式 apollo ip
-      	NameSpacename = "application"           //默认spacename
-      	BackUpFile = "/etc/application.agollo"  //本地备份文件地址
-    )
+##### 修改apollo配置 
+  
+此处直接使用config文件，未使用apollo，如需使用apollo 参见 [gpi](https://github.com/ybt7755221/gpi)
 
 ##### 自动生成entities
 &nbsp;&nbsp;&nbsp;&nbsp;参见 [xorm工具](http://gobook.io/read/gitea.com/xorm/manual-zh-CN/chapter-13/index.html)
@@ -52,16 +27,16 @@
 ##### 自动生成项目文件
 &nbsp;&nbsp;&nbsp;&nbsp; Linux/Mac:
 
-    ./gtool -t GinContents -r contents -d Gin -c true -f ./
+    ./vtool -t WrWorks -r work -d Gin -c true -f ./
 
 &nbsp;&nbsp;&nbsp;&nbsp; Windows:
 
-    ./gtool.exe -t GinContents -r contents -d Gin -c true -f ./
+    ./gtool.exe -t WrWorks -r work -d Gin -c true -f ./
     
-Windows需要下载 [gtool](https://github.com/ybt7755221/gtool) 自己编译exe文件
+Windows暂不提供自动生成代码工具
 
 ---
-#### 部分apollo配置说明：
+#### 部分apollo配置说明：--暂未使用apollo
 
 &nbsp;&nbsp;&nbsp;&nbsp;环境变量
     
@@ -82,6 +57,7 @@ Windows需要下载 [gtool](https://github.com/ybt7755221/gtool) 自己编译exe
 ---
 #### 参考文档地址
 
++ [gpi](https://github.com/ybt7755221/gpi)
 + [xorm数据库操作文档](http://gobook.io/read/gitea.com/xorm/manual-zh-CN/#)
 + [xormplus](https://www.kancloud.cn/xormplus/xorm/167093)
 
