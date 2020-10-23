@@ -1,9 +1,20 @@
 ## &nbsp;&nbsp;&nbsp;&nbsp;work_report是一个基于gin的日志汇总系统。源于本人不愿每日手动重复收集人员日报，并汇总周报而制作的自动生成系统
 
 
-#### 介绍:
-    此项目为日志系统后端代码，
-    前端页面参见： [wp-front](https://github.com/ybt7755221/wp-front)
+##### 介绍:
+#####&nbsp;&nbsp;&nbsp;&nbsp;此项目为日志系统后端代码
+######&nbsp;&nbsp;&nbsp;&nbsp;前端页面参见： [wp-front](https://github.com/ybt7755221/wp-front)
+
+##### 现有功能：
+
++ 创建用户
++ 日报填写/删除
++ 日报汇总/周报汇总
+
+##### 探讨功能：
+
++ 用户权限管理（只看自己，能看组员，能看所有，管理员）
++ 任务分组（增加按大项目汇总日报/周报）
 
 ##### 目录结构:
 参见 [gpi](https://github.com/ybt7755221/gpi)
@@ -35,26 +46,6 @@
     
 Windows暂不提供自动生成代码工具
 
----
-#### 部分apollo配置说明：--暂未使用apollo
-
-&nbsp;&nbsp;&nbsp;&nbsp;环境变量
-    
-    ENVIRONMENT = fat   //判断apollo是测试还是正式
-    
-&nbsp;&nbsp;&nbsp;&nbsp;如需要判断项目优先使用：
-    
-    os.Getenv("ACTIVE") //判断docker环境是正式测试
-
-&nbsp;&nbsp;&nbsp;&nbsp;是否开启prof（性能监控工具建议正式性能优化时开启，其他时间关闭）： 
-    
-    PPROF_STATUS = start
-    
-&nbsp;&nbsp;&nbsp;&nbsp; authentication中间件里的验签的secret
-    
-    SECRET = Dl*sCKW7C{SfYiPtYX*O5/71vG9&sm?2U
-    
----
 #### 参考文档地址
 
 + [gpi](https://github.com/ybt7755221/gpi)
