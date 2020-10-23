@@ -1,0 +1,106 @@
+basePath: /
+definitions:
+  controllers.SgrResp:
+    properties:
+      code:
+        example: 1000
+        type: integer
+      data:
+        type: object
+      msg:
+        example: 请求成功
+        type: string
+    type: object
+host: localhost
+info:
+  contact: {}
+  description: work_report自动文档
+  license: {}
+  title: work_report文档平台
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - text/html
+      description: 根据条件获取信息
+      parameters:
+      - description: 页数，默认1
+        in: query
+        name: page_num
+        type: integer
+      - description: 每夜条数，默认50
+        in: query
+        name: page_size
+        type: integer
+      - description: 排序。id desc, time asc
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.SgrResp'
+      summary: 【GetAll】根据条件获取信息
+      tags:
+      - users表操作
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 创建users信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.SgrResp'
+      summary: 【create】创建users信息
+      tags:
+      - users表操作
+  /users/{id}:
+    get:
+      consumes:
+      - text/html
+      description: 根据id获取信息
+      parameters:
+      - description: 主键id
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.SgrResp'
+      summary: 【GetOne】根据id获取信息
+      tags:
+      - users表操作
+  /users/update-by-id:
+    put:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 根据id更新数据
+      parameters:
+      - description: 主键更新依据此id
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.SgrResp'
+      summary: 【update】根据id更新数据
+      tags:
+      - users表操作
+swagger: "2.0"

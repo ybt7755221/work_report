@@ -1,0 +1,161 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "work_report自动文档",
+        "title": "work_report文档平台",
+        "contact": {},
+        "license": {},
+        "version": "1.0"
+    },
+    "host": "localhost",
+    "basePath": "/",
+    "paths": {
+        "/users": {
+            "get": {
+                "description": "根据条件获取信息",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users表操作"
+                ],
+                "summary": "【GetAll】根据条件获取信息",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页数，默认1",
+                        "name": "page_num",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每夜条数，默认50",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序。id desc, time asc",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.SgrResp"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "创建users信息",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users表操作"
+                ],
+                "summary": "【create】创建users信息",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.SgrResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/update-by-id": {
+            "put": {
+                "description": "根据id更新数据",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users表操作"
+                ],
+                "summary": "【update】根据id更新数据",
+                "parameters": [
+                    {
+                        "description": "主键更新依据此id",
+                        "name": "id",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.SgrResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "根据id获取信息",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users表操作"
+                ],
+                "summary": "【GetOne】根据id获取信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "主键id",
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.SgrResp"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controllers.SgrResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "data": {
+                    "type": "object"
+                },
+                "msg": {
+                    "type": "string",
+                    "example": "请求成功"
+                }
+            }
+        }
+    }
+}
