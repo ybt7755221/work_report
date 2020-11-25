@@ -2,6 +2,7 @@ package router
 
 import (
 	. "work_report/controllers"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,6 +12,7 @@ func wrWorksRouter(router *gin.Engine) {
 	{
 		wrWorksR.GET("/", wrWorks.Find)
 		wrWorksR.GET("/weekly", wrWorks.FindByWeekly)
+		wrWorksR.GET("/created-limit", wrWorks.FindByCreatedLimit)
 		wrWorksR.POST("/delete", wrWorks.DeletedById)
 		wrWorksR.GET("/page", wrWorks.FindPaging)
 		wrWorksR.POST("/", wrWorks.Create)

@@ -1,17 +1,18 @@
 package models
 
 import (
-	. "work_report/entities"
-	DB "work_report/libraries/database"
 	"errors"
 	"fmt"
 	"strings"
+	. "work_report/entities"
+	DB "work_report/libraries/database"
 )
 
 type WrWorksModel struct {
 }
+
 //查找多条数据
-func(u *WrWorksModel) Find(conditions *WrWorks, pagination *Pagination )  ([]WrWorks, error) {
+func (u *WrWorksModel) Find(conditions *WrWorks, pagination *Pagination) ([]WrWorks, error) {
 	dbConn := DB.GetDB(Gin)
 	defer dbConn.Close()
 	//获取分页信息
@@ -26,10 +27,10 @@ func(u *WrWorksModel) Find(conditions *WrWorks, pagination *Pagination )  ([]WrW
 	//排序
 	sort := pageinfo["sort"].(map[string]string)
 	if len(sort) > 0 {
-		for key, val := range sort{
+		for key, val := range sort {
 			if strings.ToLower(val) == "asc" {
 				dbC = dbC.Asc(key)
-			}else{
+			} else {
 				dbC = dbC.Desc(key)
 			}
 		}
@@ -40,7 +41,7 @@ func(u *WrWorksModel) Find(conditions *WrWorks, pagination *Pagination )  ([]WrW
 }
 
 //查找多条数据
-func(u *WrWorksModel) FindByWeekly(conditions *WrWorks, pagination *Pagination, startTime string, endTime string )  ([]WrWorks, error) {
+func (u *WrWorksModel) FindByWeekly(conditions *WrWorks, pagination *Pagination, startTime string, endTime string) ([]WrWorks, error) {
 	dbConn := DB.GetDB(Gin).Where("created >= ?", startTime).Where("created <= ?", endTime)
 	defer dbConn.Close()
 	//获取分页信息
@@ -55,10 +56,10 @@ func(u *WrWorksModel) FindByWeekly(conditions *WrWorks, pagination *Pagination, 
 	//排序
 	sort := pageinfo["sort"].(map[string]string)
 	if len(sort) > 0 {
-		for key, val := range sort{
+		for key, val := range sort {
 			if strings.ToLower(val) == "asc" {
 				dbC = dbC.Asc(key)
-			}else{
+			} else {
 				dbC = dbC.Desc(key)
 			}
 		}
@@ -69,7 +70,7 @@ func(u *WrWorksModel) FindByWeekly(conditions *WrWorks, pagination *Pagination, 
 }
 
 //查找多条数据-分页
-func(u *WrWorksModel) FindPaging(conditions *WrWorks, pagination *Pagination )  (*WrWorksPageDao, error) {
+func (u *WrWorksModel) FindPaging(conditions *WrWorks, pagination *Pagination) (*WrWorksPageDao, error) {
 	dbConn := DB.GetDB(Gin)
 	defer dbConn.Close()
 	//获取分页信息
@@ -84,10 +85,10 @@ func(u *WrWorksModel) FindPaging(conditions *WrWorks, pagination *Pagination )  
 	//排序
 	sort := pageinfo["sort"].(map[string]string)
 	if len(sort) > 0 {
-		for key, val := range sort{
+		for key, val := range sort {
 			if strings.ToLower(val) == "asc" {
 				dbC = dbC.Asc(key)
-			}else{
+			} else {
 				dbC = dbC.Desc(key)
 			}
 		}
@@ -100,6 +101,7 @@ func(u *WrWorksModel) FindPaging(conditions *WrWorks, pagination *Pagination )  
 	}
 	return wrWorksPage, err
 }
+
 //根据id查找单条数据
 func (u *WrWorksModel) GetById(id int) (*WrWorks, error) {
 	fmt.Println(id)
@@ -109,6 +111,7 @@ func (u *WrWorksModel) GetById(id int) (*WrWorks, error) {
 	defer dbConn.Close()
 	return wrWorks, err
 }
+
 //插入
 func (u *WrWorksModel) Insert(wrWorks *WrWorks) (err error) {
 	dbConn := DB.GetDB(Gin)
@@ -118,11 +121,12 @@ func (u *WrWorksModel) Insert(wrWorks *WrWorks) (err error) {
 		return err
 	}
 	if affected < 1 {
-		err = errors.New("插入影响行数: 0" )
+		err = errors.New("插入影响行数: 0")
 		return err
 	}
 	return err
 }
+
 //根据id更新
 func (u *WrWorksModel) UpdateById(id int, wrWorks *WrWorks) (affected int64, err error) {
 	dbConn := DB.GetDB(Gin)

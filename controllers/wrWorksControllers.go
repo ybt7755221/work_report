@@ -1,16 +1,19 @@
 package controllers
 
 import (
-	"github.com/gin-gonic/gin"
 	"strconv"
 	"time"
 	et "work_report/entities"
 	"work_report/libraries/gutil"
 	"work_report/service"
+
+	"github.com/gin-gonic/gin"
 )
+
 type WrWorksController struct {
 	serv *service.WrWorksService
 }
+
 // @Tags work表操作
 // @Summary 【GetAll】根据条件获取信息
 // @Description 根据条件获取信息
@@ -35,6 +38,7 @@ func (c *WrWorksController) Find(ctx *gin.Context) {
 	}
 	resSuccess(ctx, wrWorksList)
 }
+
 // @Tags work表操作
 // @Summary 【GetAll】根据条件获取信息
 // @Description 根据条件获取信息
@@ -53,6 +57,39 @@ func (c *WrWorksController) FindByWeekly(ctx *gin.Context) {
 	}
 	n, _ := strconv.Atoi(ctx.Query("weekly_type"))
 	startTime, endTime := gutil.GetWeekDay(n)
+	wrWorks := new(et.WrWorks)
+	getParamsNew(ctx, wrWorks)
+	pagination := new(et.Pagination)
+	pagination.PageNum, _ = strconv.Atoi(ctx.Query("page_num"))
+	pagination.PageSize, _ = strconv.Atoi(ctx.Query("page_size"))
+	pagination.SortStr = ctx.Query("sort")
+	wrWorksList, err := c.serv.FindByWeekly(wrWorks, pagination, startTime, endTime)
+	if err != nil {
+		resError(ctx, et.EntityFailure, err.Error())
+		return
+	}
+	resSuccess(ctx, wrWorksList)
+}
+
+// @Tags work表操作
+// @Summary 【GetAll】根据条件获取信息
+// @Description 根据条件获取信息
+// @Accept html
+// @Produce json
+// @Param	start_time	query 	int		true	"开始时间"
+// @Param	end_time	query 	int		true	"结束时间"
+// @Param	page_num	query 	int		false	"页数，默认1"
+// @Param	page_size	query 	int		false	"每夜条数，默认50"
+// @Param	sort		query 	string	false	"排序 {\"id\":\"desc\"}"
+// @Success 200 {object} SgrResp
+// @Router /work/weekly [get]
+func (c *WrWorksController) FindByCreatedLimit(ctx *gin.Context) {
+	startTime := ctx.Query("start_time")
+	endTime := ctx.Query("end_time")
+	if startTime == "" || endTime == "" {
+		resError(ctx, et.EntityFailure, "start_time/end_time不能为空")
+		return
+	}
 	wrWorks := new(et.WrWorks)
 	getParamsNew(ctx, wrWorks)
 	pagination := new(et.Pagination)
@@ -91,6 +128,7 @@ func (c *WrWorksController) FindPaging(ctx *gin.Context) {
 	}
 	resSuccess(ctx, wrWorksList)
 }
+
 // @Tags work表操作
 // @Summary 【GetOne】根据id获取信息
 // @Description 根据id获取信息
@@ -104,10 +142,11 @@ func (c *WrWorksController) FindById(ctx *gin.Context) {
 	wrWorks, err := c.serv.FindById(id)
 	if err != nil {
 		resError(ctx, et.EntityFailure, err.Error())
-	}else{
+	} else {
 		resSuccess(ctx, wrWorks)
 	}
 }
+
 // @Tags work表操作
 // @Summary 【create】创建work信息
 // @Description 创建work信息
@@ -127,6 +166,7 @@ func (c *WrWorksController) Create(ctx *gin.Context) {
 	}
 	resSuccess(ctx, wrWorks)
 }
+
 // @Tags work表操作
 // @Summary 【update】根据id更新数据
 // @Description 根据id更新数据
@@ -135,23 +175,24 @@ func (c *WrWorksController) Create(ctx *gin.Context) {
 // @Param   id	body	string 	true	"主键更新依据此id"
 // @Success 200 {object} SgrResp
 // @Router /work/update-by-id [put]
-func (c * WrWorksController) UpdateById(ctx *gin.Context) {
+func (c *WrWorksController) UpdateById(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.PostForm("id"))
 	wrWorks := new(et.WrWorks)
 	getPostStructData(ctx, wrWorks)
 	has, err := c.serv.UpdateById(id, wrWorks)
 	if err != nil {
 		resError(ctx, et.EntityFailure, err.Error())
-	}else{
+	} else {
 		if has == 0 {
 			resError(ctx, et.EntityFailure, "影响行数0")
-		}else{
+		} else {
 			resSuccess(ctx, gin.H{
-				"update_count":has,
+				"update_count": has,
 			})
 		}
 	}
 }
+
 // @Tags work表操作
 // @Summary 【delete】根据id删除数据
 // @Description 根据id删除数据
@@ -160,13 +201,13 @@ func (c * WrWorksController) UpdateById(ctx *gin.Context) {
 // @Param   id	body	string 	true	"主键更新依据此id"
 // @Success 200 {object} SgrResp
 // @Router /work/delete [post]
-func (c * WrWorksController) DeletedById(ctx *gin.Context) {
+func (c *WrWorksController) DeletedById(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.PostForm("id"))
 	userId, _ := strconv.Atoi(ctx.PostForm("user_id"))
 	res, err := c.serv.DeletedById(id, userId)
 	if res {
 		resSuccess(ctx, gin.H{})
-	}else{
+	} else {
 		resError(ctx, et.EntityPanic, err.Error())
 	}
 	return
