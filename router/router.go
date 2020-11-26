@@ -7,6 +7,7 @@ import (
 	"work_report/config"
 	_ "work_report/docs"
 	"work_report/middlewares/exception"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -55,6 +56,8 @@ func InitRouter() *gin.Engine {
 	wrProjectsRouter(router)
 	wrUsersRouter(router)
 	wrWorksRouter(router)
+	wrAttendanceRouter(router)
+	wrDayoffRouter(router)
 	//增加页面模版
 	//router.LoadHTMLGlob("views/**/*")
 	return router
