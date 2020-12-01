@@ -15,7 +15,7 @@ func wrAttendanceRouter(router *gin.Engine) {
 		wrAttendanceR.GET("/page", wrAttendance.FindPaging)
 		wrAttendanceR.POST("/", wrAttendance.Create)
 		wrAttendanceR.GET("/find-by-id/:id", wrAttendance.FindById)
-		wrAttendanceR.PUT("/update-by-id", wrAttendance.UpdateById)
+		wrAttendanceR.POST("/update-by-id", wrAttendance.UpdateById)
 		wrAttendanceR.POST("/delete-by-id", wrAttendance.DeleteById)
 	}
 }

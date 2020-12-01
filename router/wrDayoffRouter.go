@@ -15,7 +15,7 @@ func wrDayoffRouter(router *gin.Engine) {
 		wrDayoffR.GET("/page", wrDayoff.FindPaging)
 		wrDayoffR.POST("/", wrDayoff.Create)
 		wrDayoffR.GET("/find-by-id/:id", wrDayoff.FindById)
-		wrDayoffR.PUT("/update-by-id", wrDayoff.UpdateById)
+		wrDayoffR.POST("/update-by-id", wrDayoff.UpdateById)
 		wrDayoffR.POST("/delete-by-id", wrDayoff.DeleteById)
 	}
 }
