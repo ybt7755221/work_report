@@ -7,6 +7,7 @@ import (
 
 type WrAttendanceService struct {
 }
+
 /**
  * 根据多条件查询数据-单条
  */
@@ -14,6 +15,7 @@ func (c *WrAttendanceService) FindOne(conditions *et.WrAttendance) (*et.WrAttend
 	wrAttendanceModel := models.WrAttendanceModel{}
 	return wrAttendanceModel.FindOne(conditions)
 }
+
 /**
  * 根据多条件查询数据
  */
@@ -56,4 +58,13 @@ func (c *WrAttendanceService) UpdateById(id int, wrAttendance *et.WrAttendance) 
 	wrAttendanceModel := models.WrAttendanceModel{}
 	has, err = wrAttendanceModel.UpdateById(id, wrAttendance)
 	return
+}
+
+func (c *WrAttendanceService) DeletedById(id int, userId int) (bool, error) {
+	wrAttendanceModel := models.WrAttendanceModel{}
+	has, err := wrAttendanceModel.DeleteById(id, userId)
+	if err != nil || has == 0 {
+		return false, err
+	}
+	return true, err
 }

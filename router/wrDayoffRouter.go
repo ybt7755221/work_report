@@ -2,6 +2,7 @@ package router
 
 import (
 	. "work_report/controllers"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,5 +16,6 @@ func wrDayoffRouter(router *gin.Engine) {
 		wrDayoffR.POST("/", wrDayoff.Create)
 		wrDayoffR.GET("/find-by-id/:id", wrDayoff.FindById)
 		wrDayoffR.PUT("/update-by-id", wrDayoff.UpdateById)
+		wrDayoffR.POST("/delete-by-id", wrDayoff.DeleteById)
 	}
 }

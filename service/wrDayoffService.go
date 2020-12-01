@@ -7,6 +7,7 @@ import (
 
 type WrDayoffService struct {
 }
+
 /**
  * 根据多条件查询数据-单条
  */
@@ -14,6 +15,7 @@ func (c *WrDayoffService) FindOne(conditions *et.WrDayoff) (*et.WrDayoff, error)
 	wrDayoffModel := models.WrDayoffModel{}
 	return wrDayoffModel.FindOne(conditions)
 }
+
 /**
  * 根据多条件查询数据
  */
@@ -56,4 +58,13 @@ func (c *WrDayoffService) UpdateById(id int, wrDayoff *et.WrDayoff) (has int64, 
 	wrDayoffModel := models.WrDayoffModel{}
 	has, err = wrDayoffModel.UpdateById(id, wrDayoff)
 	return
+}
+
+func (c *WrDayoffService) DeletedById(id int, userId int) (bool, error) {
+	wrDayoffModel := models.WrDayoffModel{}
+	has, err := wrDayoffModel.DeleteById(id, userId)
+	if err != nil || has == 0 {
+		return false, err
+	}
+	return true, err
 }

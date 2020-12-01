@@ -1,29 +1,30 @@
 package models
 
 import (
-	. "work_report/entities"
-	DB "work_report/libraries/database"
 	"errors"
 	"fmt"
 	"strings"
+	. "work_report/entities"
+	DB "work_report/libraries/database"
 )
 
 type WrAttendanceModel struct {
 }
 
 //查找单条数据
-func(u *WrAttendanceModel) FindOne(conditions *WrAttendance) (*WrAttendance, error) {
+func (u *WrAttendanceModel) FindOne(conditions *WrAttendance) (*WrAttendance, error) {
 	dbConn := DB.GetDB(Gin)
 	defer dbConn.Close()
 	has, err := dbConn.Get(conditions)
 	if has {
 		return conditions, err
-	}else{
+	} else {
 		return nil, err
 	}
 }
+
 //查找多条数据
-func(u *WrAttendanceModel) Find(conditions *WrAttendance, pagination *Pagination )  ([]WrAttendance, error) {
+func (u *WrAttendanceModel) Find(conditions *WrAttendance, pagination *Pagination) ([]WrAttendance, error) {
 	dbConn := DB.GetDB(Gin)
 	defer dbConn.Close()
 	//获取分页信息
@@ -38,10 +39,10 @@ func(u *WrAttendanceModel) Find(conditions *WrAttendance, pagination *Pagination
 	//排序
 	sort := pageinfo["sort"].(map[string]string)
 	if len(sort) > 0 {
-		for key, val := range sort{
+		for key, val := range sort {
 			if strings.ToLower(val) == "asc" {
 				dbC = dbC.Asc(key)
-			}else{
+			} else {
 				dbC = dbC.Desc(key)
 			}
 		}
@@ -52,7 +53,7 @@ func(u *WrAttendanceModel) Find(conditions *WrAttendance, pagination *Pagination
 }
 
 //查找多条数据-分页
-func(u *WrAttendanceModel) FindPaging(conditions *WrAttendance, pagination *Pagination )  (*WrAttendancePageDao, error) {
+func (u *WrAttendanceModel) FindPaging(conditions *WrAttendance, pagination *Pagination) (*WrAttendancePageDao, error) {
 	dbConn := DB.GetDB(Gin)
 	defer dbConn.Close()
 	//获取分页信息
@@ -67,10 +68,10 @@ func(u *WrAttendanceModel) FindPaging(conditions *WrAttendance, pagination *Pagi
 	//排序
 	sort := pageinfo["sort"].(map[string]string)
 	if len(sort) > 0 {
-		for key, val := range sort{
+		for key, val := range sort {
 			if strings.ToLower(val) == "asc" {
 				dbC = dbC.Asc(key)
-			}else{
+			} else {
 				dbC = dbC.Desc(key)
 			}
 		}
@@ -83,6 +84,7 @@ func(u *WrAttendanceModel) FindPaging(conditions *WrAttendance, pagination *Pagi
 	}
 	return wrAttendancePage, err
 }
+
 //根据id查找单条数据
 func (u *WrAttendanceModel) GetById(id int) (*WrAttendance, error) {
 	fmt.Println(id)
@@ -92,6 +94,7 @@ func (u *WrAttendanceModel) GetById(id int) (*WrAttendance, error) {
 	defer dbConn.Close()
 	return wrAttendance, err
 }
+
 //插入
 func (u *WrAttendanceModel) Insert(wrAttendance *WrAttendance) (err error) {
 	dbConn := DB.GetDB(Gin)
@@ -101,15 +104,23 @@ func (u *WrAttendanceModel) Insert(wrAttendance *WrAttendance) (err error) {
 		return err
 	}
 	if affected < 1 {
-		err = errors.New("插入影响行数: 0" )
+		err = errors.New("插入影响行数: 0")
 		return err
 	}
 	return err
 }
+
 //根据id更新
 func (u *WrAttendanceModel) UpdateById(id int, wrAttendance *WrAttendance) (affected int64, err error) {
 	dbConn := DB.GetDB(Gin)
 	affected, err = dbConn.Id(id).Update(wrAttendance)
 	defer dbConn.Close()
 	return
+}
+
+func (u *WrAttendanceModel) DeleteById(id int, userId int) (int64, error) {
+	dbConn := DB.GetDB(Gin)
+	wrAttendance := new(WrAttendance)
+	num, err := dbConn.Id(id).Where("user_id = ?", userId).Delete(wrAttendance)
+	return num, err
 }

@@ -1,14 +1,17 @@
 package controllers
 
 import (
+	"strconv"
 	et "work_report/entities"
 	"work_report/service"
+
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
+
 type WrAttendanceController struct {
 	serv *service.WrAttendanceService
 }
+
 // @Tags user表操作
 // @Summary 【GetOne】根据条件获取单条数据
 // @Description 根据条件获取信息
@@ -22,10 +25,11 @@ func (c *WrAttendanceController) FindOne(ctx *gin.Context) {
 	res, err := c.serv.FindOne(wrAttendance)
 	if err != nil {
 		resError(ctx, et.EntityFailure, err.Error())
-	}else{
+	} else {
 		resSuccess(ctx, res)
 	}
 }
+
 // @Tags attendance表操作
 // @Summary 【GetAll】根据条件获取信息
 // @Description 根据条件获取信息
@@ -50,6 +54,7 @@ func (c *WrAttendanceController) Find(ctx *gin.Context) {
 	}
 	resSuccess(ctx, wrAttendanceList)
 }
+
 // @Tags attendance表操作
 // @Summary 【GetAll】根据条件获取信息
 // @Description 根据条件获取信息
@@ -74,6 +79,7 @@ func (c *WrAttendanceController) FindPaging(ctx *gin.Context) {
 	}
 	resSuccess(ctx, wrAttendanceList)
 }
+
 // @Tags attendance表操作
 // @Summary 【GetOne】根据id获取信息
 // @Description 根据id获取信息
@@ -87,10 +93,11 @@ func (c *WrAttendanceController) FindById(ctx *gin.Context) {
 	wrAttendance, err := c.serv.FindById(id)
 	if err != nil {
 		resError(ctx, et.EntityFailure, err.Error())
-	}else{
+	} else {
 		resSuccess(ctx, wrAttendance)
 	}
 }
+
 // @Tags attendance表操作
 // @Summary 【create】创建attendance信息
 // @Description 创建attendance信息
@@ -107,6 +114,7 @@ func (c *WrAttendanceController) Create(ctx *gin.Context) {
 	}
 	resSuccess(ctx, wrAttendance)
 }
+
 // @Tags attendance表操作
 // @Summary 【update】根据id更新数据
 // @Description 根据id更新数据
@@ -115,20 +123,32 @@ func (c *WrAttendanceController) Create(ctx *gin.Context) {
 // @Param   id	body	string 	true	"主键更新依据此id"
 // @Success 200 {object} SgrResp
 // @Router /attendance/update-by-id [put]
-func (c * WrAttendanceController) UpdateById(ctx *gin.Context) {
+func (c *WrAttendanceController) UpdateById(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.PostForm("id"))
 	wrAttendance := new(et.WrAttendance)
 	getPostStructData(ctx, wrAttendance)
 	has, err := c.serv.UpdateById(id, wrAttendance)
 	if err != nil {
 		resError(ctx, et.EntityFailure, err.Error())
-	}else{
+	} else {
 		if has == 0 {
 			resError(ctx, et.EntityFailure, "影响行数0")
-		}else{
+		} else {
 			resSuccess(ctx, gin.H{
-				"update_count":has,
+				"update_count": has,
 			})
 		}
 	}
+}
+
+func (c *WrAttendanceController) DeleteById(ctx *gin.Context) {
+	id, _ := strconv.Atoi(ctx.PostForm("id"))
+	userId, _ := strconv.Atoi(ctx.PostForm("user_id"))
+	res, err := c.serv.DeletedById(id, userId)
+	if res {
+		resSuccess(ctx, gin.H{})
+	} else {
+		resError(ctx, et.EntityPanic, err.Error())
+	}
+	return
 }
