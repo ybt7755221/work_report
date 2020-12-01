@@ -68,3 +68,12 @@ func (c *WrDayoffService) DeletedById(id int, userId int) (bool, error) {
 	}
 	return true, err
 }
+
+func (c *WrDayoffService) DeletedByAttendanceId(id int) (bool, error) {
+	wrDayoffModel := models.WrDayoffModel{}
+	has, err := wrDayoffModel.DeleteByAttendanceId(id)
+	if err != nil || has == 0 {
+		return false, err
+	}
+	return true, err
+}

@@ -141,6 +141,17 @@ func (c *WrDayoffController) UpdateById(ctx *gin.Context) {
 	}
 }
 
+func (c *WrDayoffController) DeleteByAttendanceId(ctx *gin.Context) {
+	attendanceId, _ := strconv.Atoi(ctx.PostForm("attendance_id"))
+	res, err := c.serv.DeletedByAttendanceId(attendanceId)
+	if res {
+		resSuccess(ctx, gin.H{})
+	} else {
+		resError(ctx, et.EntityPanic, err.Error())
+	}
+	return
+}
+
 func (c *WrDayoffController) DeleteById(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.PostForm("id"))
 	userId, _ := strconv.Atoi(ctx.PostForm("user_id"))

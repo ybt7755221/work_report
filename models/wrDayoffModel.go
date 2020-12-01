@@ -124,3 +124,10 @@ func (u *WrDayoffModel) DeleteById(id int, userId int) (int64, error) {
 	num, err := dbConn.Id(id).Where("user_id = ?", userId).Delete(wrDayoff)
 	return num, err
 }
+
+func (u *WrDayoffModel) DeleteByAttendanceId(attendanceId int) (int64, error) {
+	dbConn := DB.GetDB(Gin)
+	wrDayoff := new(WrDayoff)
+	num, err := dbConn.Where("attendance_id = ?", attendanceId).Delete(wrDayoff)
+	return num, err
+}
