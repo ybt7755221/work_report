@@ -17,6 +17,6 @@ func wrWorksRouter(router *gin.Engine) {
 		wrWorksR.GET("/page", wrWorks.FindPaging)
 		wrWorksR.POST("/", wrWorks.Create)
 		wrWorksR.GET("/find-by-id/:id", wrWorks.FindById)
-		wrWorksR.PUT("/update-by-id", wrWorks.UpdateById)
+		wrWorksR.POST("/update-by-id", wrWorks.UpdateById)
 	}
 }
